@@ -4,6 +4,9 @@ package com.example.shanlu.slu1_countbook.Data;
  * Created by shanlu on 2017-09-20.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +17,7 @@ import java.util.Date;
  * attributes directly (except for the date attribute).
  */
 
-public class Counter {
+public class Counter  implements Parcelable {
 
     // Each counter has the following private attributes:
     // Name (textual),
@@ -29,8 +32,14 @@ public class Counter {
     private Integer init_val;
     private String comment;
 
-    // Constructor for a counter object
-    // Users must specify the name and initial value to create a new counter object
+    /**
+     * Constructor for a counter object
+     * Users must specify the name and initial value to create a new counter object
+     *
+     * @param Name: String, the name of the counter
+     * @param Init_Val: Integer, the initial of the counter
+     *
+     */
     public Counter(String Name, Integer Init_Val) {
 
         // Save the new counter's name and initial value
@@ -42,16 +51,68 @@ public class Counter {
         this.curr_val = this.init_val;
 
         //Set the counter's date to the date it's created
-        this.date = setDate();
+        setDate();
 
+        // Set the comment to empty string
+        setCountComment("");
     }
 
     /**
-     * Generate the date in yyyy-MM-dd format
+     * Constructor used when reconstructing a counter object from Parcel
      *
-     * @return curr_Date: the current date in yyyy-MM-dd format (String)
+     * @param parcel: Parcel, the parcel used to recreate the counter object
+     *
      */
-    private String setDate() {
+    private Counter(Parcel parcel) {
+        this.name = parcel.readString();
+        this.date = parcel.readString();
+
+        this.init_val = parcel.readInt();
+        this.curr_val = parcel.readInt();
+
+        this.comment = parcel.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Write the counter object content to parcel
+     *
+     * @param out Parcel
+     * @param flags int
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(this.name);
+        out.writeString(this.date);
+
+        out.writeInt(this.init_val);
+        out.writeInt(this.curr_val);
+
+        out.writeString(this.comment);
+    }
+
+    /**
+     * Create Counter object from parcel
+     */
+    public static final Parcelable.Creator<Counter> CREATOR = new Parcelable.Creator<Counter>() {
+
+        public Counter createFromParcel(Parcel in) {
+            return new Counter(in);
+        }
+
+        public Counter[] newArray(int size) {
+            return new Counter[size];
+        }
+    };
+
+    /**
+     * Generate the date in yyyy-MM-dd format, set this.date to the current date
+     */
+    private void setDate() {
         // set the current date format to yyyy-MM-dd format
         SimpleDateFormat currDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //get the current date
@@ -59,7 +120,8 @@ public class Counter {
         // convert the current Date to string
         String curr_Date = currDateFormat.format(currDate);
 
-        return curr_Date;
+        // set current date
+        this.date = curr_Date;
     }
 
     /**
@@ -105,6 +167,8 @@ public class Counter {
      */
     public String getCountComment() {
         if (this.comment == null) {
+            // set the comment to empty string
+            setCountComment("");
             return "";
         } else {
             return this.comment;
@@ -129,7 +193,7 @@ public class Counter {
         this.curr_val = Curr_Val;
 
         // Update the date of the counter
-        this.date = setDate();
+        setDate();
     }
 
     /**
@@ -147,6 +211,11 @@ public class Counter {
      * @param Comment: the counter's comment
      */
     public void setCountComment(String Comment) {
-        this.comment = Comment;
+        if (Comment == null) {
+            this.comment = "";
+        } else {
+            this.comment = Comment;
+        }
     }
+
 }

@@ -4,6 +4,8 @@ package com.example.shanlu.slu1_countbook;
  * Created by shanlu on 2017-09-20.
  */
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,9 +29,13 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
     // The counters arrayList displaied using the recycler view
     private ArrayList<Counter> counters;
 
-    public CounterAdapter(ArrayList<Counter> counters) {
+    private Context mContext;
+
+    public CounterAdapter(ArrayList<Counter> counters, Context context) {
         this.numItems = counters.size();
         this.counters = counters;
+
+        this.mContext = context;
     }
 
     /**
@@ -119,8 +125,16 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
 
             Log.d("Test", "Position" + Integer.toString(adapterPosition));
 
-            // Show the detail of the selected counter
+            // The selected counter object
+            Counter selected_Counter = counters.get(adapterPosition);
 
+            // Show the detail of the selected counter
+            // Start the CounterDetailActivity
+            Intent counterDetail_intent = new Intent(mContext, CounterDetailActivity.class);
+            // Pass the selected counter object to the counter detail activity
+            counterDetail_intent.putExtra(MainActivity.COUNTER_OBJ, selected_Counter);
+
+            mContext.startActivity(counterDetail_intent);
         }
     }
 }
