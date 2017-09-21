@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">slu1-CountBook</string>
+
+    <!-- Each counter's fields -->
+    <string name="count_name">Name:</string>
+    <string name="count_date">Date:</string>
+    <string name="count_curr_val">Current Value:</string>
+    <string name="count_init_val">Initial Value:</string>
+    <string name="count_comment">Comment:</string>
+
+    <!-- Summary of the total number of counters in the list -->
+    <string name="total_count_num">Total Number: </string>
+
+    <!-- Button for adding a counter to the list -->
+    <string name="add_butt">Add a counter</string>
+
+    <!-- Showing the counter's details -->
+    <string name="count_detail">Counter Details: </string>
+
+    <!-- Button for reset the current value to the initial value -->
+    <string name="reset_butt">Reset to initial</string>
+
+    <!-- Button for adding a new counter or saving the changes made for an existing counter -->
+    <string name="save_butt">Save</string>
+    <!-- Button for cancelling a new counter's creation or the changes made for an existing counter -->
+    <string name="cancel_butt">Cancel</string>
+
 </resources>
