@@ -40,6 +40,7 @@
                 android:id="@+id/counter_name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/name_edit_hint"
                 android:maxLines="1"/>
 
         </LinearLayout>
@@ -90,6 +91,7 @@
                 android:id="@+id/counter_curr_val_edit"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
+                android:hint="@string/val_edit_hint"
                 android:maxLines="1"/>
 
             <ImageButton
@@ -130,6 +132,7 @@
                 android:id="@+id/counter_init_val_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/val_edit_hint"
                 android:maxLines="1"/>
 
         </LinearLayout>

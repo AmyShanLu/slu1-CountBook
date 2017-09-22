@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shanlu.slu1_countbook.Data.Counter;
+
+import static com.example.shanlu.slu1_countbook.R.string.val_edit_hint;
 
 public class CounterDetailActivity extends AppCompatActivity {
 
@@ -43,6 +46,14 @@ public class CounterDetailActivity extends AppCompatActivity {
         mCounterInitValEdit = (EditText) findViewById(R.id.counter_init_val_edit);
         mCounterCommentEdit = (EditText) findViewById(R.id.counter_comment_edit);
 
+        // Set the TextWatcher for the EditText
+        mCounterNameEdit.addTextChangedListener(new StringEditTextWatcher(mCounterNameEdit,
+                R.id.counter_name_edit));
+        mCounterCurrValEdit.addTextChangedListener(new ValueEditTextWatcher(mCounterCurrValEdit,
+                R.id.counter_curr_val_edit));
+        mCounterInitValEdit.addTextChangedListener(new ValueEditTextWatcher(mCounterInitValEdit,
+                R.id.counter_init_val_edit));
+
         mAddValButton = (ImageButton) findViewById(R.id.add_val_button);
         mMinusValButton = (ImageButton) findViewById(R.id.minus_val_button);
         mResetValButton = (Button) findViewById(R.id.reset_curr_val_button);
@@ -62,6 +73,30 @@ public class CounterDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Minus the value in Current value edit box by 1
                 MinusCurrValByOne();
+            }
+        });
+
+        mResetValButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Reset the value in Current value edit box to the value in the Initial value edit box
+                ResetCurrVal();
+            }
+        });
+
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the changes
+                SaveChange();
+            }
+        });
+
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Cancel the changes made, go to main list page
+                finish();
             }
         });
 
@@ -96,13 +131,74 @@ public class CounterDetailActivity extends AppCompatActivity {
      * Add the value in the current value edit box by 1
      */
     private void AddCurrValByOne(){
-        //TODO
+        // Check if there're error in the current value edit box
+        if (mCounterCurrValEdit.getError() == null) {
+            // Add 1 to the current value
+            int curr_val = Integer.parseInt(mCounterCurrValEdit.getText().toString());
+
+            curr_val += 1;
+
+            // Set the value in the edit box to the updated curr_val
+            mCounterCurrValEdit.setText(String.valueOf(curr_val));
+
+        } else {
+            // Toast an error message
+            Toast.makeText(this,getResources().getText(val_edit_hint),Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
      * Minus the value in the current value edit box by 1
      */
     private void MinusCurrValByOne(){
+        // Check if there're error in the current value edit box
+        if (mCounterCurrValEdit.getError() == null) {
+            // Minus 1 to the current value
+            int curr_val = Integer.parseInt(mCounterCurrValEdit.getText().toString());
+
+            curr_val -= 1;
+
+            // Check if the updated current value is negative
+            if (curr_val >= 0){
+                // Set the value in the edit box to the updated curr_val
+                mCounterCurrValEdit.setText(String.valueOf(curr_val));
+            } else {
+                // Toast an error message
+                Toast.makeText(this,getResources().getText(val_edit_hint),Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            // Toast an error message
+            Toast.makeText(this,mCounterCurrValEdit.getError().toString(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Reset the value in the current value edit box to the value in the initial value edit box
+     */
+    private void ResetCurrVal() {
+        // Check if there're error in the editText box of the initial value
+        if (mCounterInitValEdit.getError() == null) {
+            // Get the value in the initial value edit box
+            int reset_val = Integer.parseInt(mCounterInitValEdit.getText().toString());
+
+            // Set it to the value in the current value edit box
+            mCounterCurrValEdit.setText(String.valueOf(reset_val));
+
+        } else {
+            // Toast an error message
+            Toast.makeText(this,mCounterInitValEdit.getError().toString(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Save the changes made in the CounterDetail UI
+     *
+     * Two cases:
+     *      1. Create a new counter and append it to the end of list in the main page
+     *      2. Change the attributes of the current counter object
+     */
+    private void SaveChange() {
         //TODO
     }
 }

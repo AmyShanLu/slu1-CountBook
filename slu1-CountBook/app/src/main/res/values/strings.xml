@@ -25,4 +25,8 @@
     <!-- Button for cancelling a new counter's creation or the changes made for an existing counter -->
     <string name="cancel_butt">Cancel</string>
 
+    <!--Edit Text Hints-->
+    <string name="name_edit_hint">Name cannot be empty</string>
+    <string name="val_edit_hint">Value must be a non-negative integer</string>
+
 </resources>
