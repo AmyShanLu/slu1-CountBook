@@ -264,7 +264,7 @@ public class CounterDetailActivity extends AppCompatActivity {
             }
         } else {
             // Toast an error message
-            Toast.makeText(this,"Must give appropriate name, current value and initial value",
+            Toast.makeText(this,"Must give appropriate name and initial value",
                     Toast.LENGTH_LONG).show();
         }
     }

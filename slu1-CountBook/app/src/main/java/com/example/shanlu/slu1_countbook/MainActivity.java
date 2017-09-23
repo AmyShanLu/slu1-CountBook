@@ -1,6 +1,10 @@
 package com.example.shanlu.slu1_countbook;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -97,6 +101,28 @@ public class MainActivity extends AppCompatActivity {
 
                 // Update the total number in the list
                 mTotalNumTextView.setText(Integer.toString(counters.size()));
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                        float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+                    View itemView = viewHolder.itemView;
+                    if (dX < 0) {
+                        // Show the delete icon
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.delete_drawable);
+                        Paint paint = new Paint();
+                        paint.setARGB(255, 255, 0, 0);
+                        c.drawBitmap(bitmap, dX + (float)itemView.getWidth(),
+                                (float) itemView.getTop() + (float) itemView.getHeight()/2 - (float) bitmap.getHeight()/2,
+                                paint);
+                    }
+
+                } else {
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
             }
         };
 
