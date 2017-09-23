@@ -29,4 +29,5 @@ public class StringEditTextWatcher extends EditTextWatcher {
             }
         }
     }
+
 }

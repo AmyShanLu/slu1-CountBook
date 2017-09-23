@@ -16,9 +16,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String COUNTER_OBJ = "COUNTER";
+    // The list of counters saved in file
+    private static ArrayList<Counter> counters;
 
-    private CounterAdapter mCounterAdapter;
+    private static CounterFileStorage counterFileStorage;
+
+    private static CounterAdapter mCounterAdapter;
     private RecyclerView mCountersList;
 
     private Button mAddButton;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        counterFileStorage = new CounterFileStorage(this);
+
         mAddButton = (Button) findViewById(R.id.add_button);
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -36,26 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 AddNewCounter();
             }
         });
-
-        Counter counter0 = new Counter("dummy0", 0);
-        counter0.setCountComment("HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello");
-
-        Counter counter1 = new Counter("dummy1", 1);
-
-        ArrayList<Counter> counters = new ArrayList<Counter>();
-        counters.add(counter0);
-        counters.add(counter1);
-        counters.add(counter0);
-        counters.add(counter1);
-        counters.add(counter0);
-        counters.add(counter1);
-        counters.add(counter0);
-        counters.add(counter1);
-        counters.add(counter0);
-        counters.add(counter1);
-
-        // Set the total number of counters in the counter list
-        ((TextView) findViewById(R.id.total_number_textView)).setText(Integer.toString(counters.size()));
 
         mCountersList = (RecyclerView) findViewById(R.id.counter_recyclerView);
 
@@ -67,6 +52,18 @@ public class MainActivity extends AppCompatActivity {
         mCountersList.addItemDecoration(mDividerItemDecoration);
 
         mCountersList.setHasFixedSize(true);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // The arraylist of counter records saved in the file
+        counters = counterFileStorage.loadFromFile();
+
+        // Set the total number of counters in the counter list
+        ((TextView) findViewById(R.id.total_number_textView)).setText(Integer.toString(counters.size()));
 
         mCounterAdapter = new CounterAdapter(counters, this);
 
@@ -81,4 +78,32 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(counterDetail_intent);
     }
+
+    /**
+     * Get the static variable counters in the mainActivity
+     */
+    public static ArrayList<Counter> getCounterList() {
+        return counters;
+    }
+
+    /**
+     * Set the updated counter list to the mainActivity's counters
+     *
+     * @param updated_counters The updated counter array list
+     */
+    public static void setCounterList(ArrayList<Counter> updated_counters) {
+        counters = updated_counters;
+    }
+
+    /**
+     * Update the screen and data in the file
+     */
+    public static void updateData() {
+        // Data changed in the recyclerView list
+        mCounterAdapter.notifyDataSetChanged();
+
+        // Data changed in the file
+        counterFileStorage.saveInFile(counters);
+    }
+
 }

@@ -21,24 +21,28 @@ public class ValueEditTextWatcher extends EditTextWatcher {
     public void afterTextChanged(Editable editable) {
         // For Value EditText, it cannot be empty string
         // Check if the input is empty string or only have spaces
-        if (TextUtils.isEmpty(editable.toString().trim())) {
-            // Set the error in the value edit text
-            getEditText().setError("Value cannot be empty!");
-        } else{
-            //  Check if the editable string can be parse to integer
-            String editable_string = editable.toString().trim();
-
-            try {
-                int editable_val = Integer.parseInt(editable_string);
-
-                // Check if the input value is negative
-                if (editable_val < 0) {
-                    getEditText().setError("Value cannot be negative!");
+            if (TextUtils.isEmpty(editable.toString().trim())) {
+                // The initial value edit text cannot be empty
+                if (getEditTextRId() == R.id.counter_init_val_edit) {
+                    // Set the error in the value edit text
+                    getEditText().setError("Initial Value cannot be empty!");
                 }
 
-            } catch (NumberFormatException e) {
-                getEditText().setError("Value must be a non-negative integer!");
+            } else{
+                //  Check if the editable string can be parse to integer
+                String editable_string = editable.toString().trim();
+
+                try {
+                    int editable_val = Integer.parseInt(editable_string);
+
+                    // Check if the input value is negative
+                    if (editable_val < 0) {
+                        getEditText().setError("Value cannot be negative!");
+                    }
+
+                } catch (NumberFormatException e) {
+                    getEditText().setError("Value must be a non-negative integer!");
+                }
             }
-        }
     }
 }

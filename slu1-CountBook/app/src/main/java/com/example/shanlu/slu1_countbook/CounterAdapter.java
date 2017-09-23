@@ -24,6 +24,10 @@ import java.util.ArrayList;
 
 public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterViewHolder> {
 
+    public static final String COUNTER_OBJ = "COUNTER";
+
+    public static final String COUNTER_OBJ_POS = "COUNTER_POS";
+
     // The number of counters in the list
     private int numItems;
     // The counters arrayList displaied using the recycler view
@@ -132,7 +136,9 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
             // Start the CounterDetailActivity
             Intent counterDetail_intent = new Intent(mContext, CounterDetailActivity.class);
             // Pass the selected counter object to the counter detail activity
-            counterDetail_intent.putExtra(MainActivity.COUNTER_OBJ, selected_Counter);
+            counterDetail_intent.putExtra(COUNTER_OBJ, selected_Counter);
+            // Pass the position of the selected counter object to the detail activity
+            counterDetail_intent.putExtra(COUNTER_OBJ_POS, adapterPosition);
 
             mContext.startActivity(counterDetail_intent);
         }
