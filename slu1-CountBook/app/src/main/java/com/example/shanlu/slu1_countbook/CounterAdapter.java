@@ -7,15 +7,12 @@ package com.example.shanlu.slu1_countbook;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.shanlu.slu1_countbook.Data.Counter;
-
-import java.util.ArrayList;
 
 /**
  * CounterAdapter is the adapter for the recycler view, it's used to display the counter item using the
@@ -28,17 +25,9 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
 
     public static final String COUNTER_OBJ_POS = "COUNTER_POS";
 
-    // The number of counters in the list
-    private int numItems;
-    // The counters arrayList displaied using the recycler view
-    private ArrayList<Counter> counters;
-
     private Context mContext;
 
-    public CounterAdapter(ArrayList<Counter> counters, Context context) {
-        this.numItems = counters.size();
-        this.counters = counters;
-
+    public CounterAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -67,7 +56,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
      */
     @Override
     public void onBindViewHolder(CounterViewHolder counterViewHolder, int position) {
-        counterViewHolder.bind(position, counters);
+        counterViewHolder.bind(position);
     }
 
     /**
@@ -76,7 +65,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
      */
     @Override
     public int getItemCount() {
-        return this.numItems;
+        return MainActivity.getCounterList().size();
     }
 
     /**
@@ -108,11 +97,10 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
          * Assign the counter's attributes to the corresponding fields
          *
          * @param position: Position of the item in the list
-         * @param counters: counters arraylist
          */
-        void bind(int position, ArrayList<Counter> counters) {
+        void bind(int position) {
             // The counter at the position in the list
-            Counter counter = counters.get(position);
+            Counter counter = MainActivity.getCounterList().get(position);
 
             // Assign the counter's attributes to the corresponding text view
             counterName_TextView.setText(counter.getCountName());
@@ -127,10 +115,8 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterV
             // The position of the counter in the list that the user clicks
             int adapterPosition = getAdapterPosition();
 
-            Log.d("Test", "Position" + Integer.toString(adapterPosition));
-
             // The selected counter object
-            Counter selected_Counter = counters.get(adapterPosition);
+            Counter selected_Counter = MainActivity.getCounterList().get(adapterPosition);
 
             // Show the detail of the selected counter
             // Start the CounterDetailActivity
