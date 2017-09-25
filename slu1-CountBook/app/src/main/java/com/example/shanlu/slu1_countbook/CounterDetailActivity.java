@@ -24,6 +24,9 @@ public class CounterDetailActivity extends AppCompatActivity {
     // The position of the selected counter object in the array list
     private int counter_position;
 
+    // The selected counter
+    private Counter selected_counter;
+
     private EditText mCounterNameEdit;
     private TextView mCounterDateText;
     private EditText mCounterCurrValEdit;
@@ -114,13 +117,13 @@ public class CounterDetailActivity extends AppCompatActivity {
             isNewCounter = true;
 
         } else {
-            // Get the Counter object
-            Counter counter = bundle.getParcelable(CounterAdapter.COUNTER_OBJ);
+            // Get the selected Counter object
+            selected_counter = bundle.getParcelable(CounterAdapter.COUNTER_OBJ);
             // Get the counter object's position in the arraylist
             counter_position = bundle.getInt(CounterAdapter.COUNTER_OBJ_POS);
 
             // Initialize the detail ui
-            InitializeDetailAct(counter);
+            InitializeDetailAct(selected_counter);
 
             isNewCounter = false;
         }
@@ -244,14 +247,26 @@ public class CounterDetailActivity extends AppCompatActivity {
 
             } else {
                 // for existing counter
-                // The counter created from the current detail screen
-                Counter changed_counter = createCounter();
+                // The old selected counter object
+                // Set the name, initial value and coumment
+                selected_counter.setCountName(mCounterNameEdit.getText().toString());
+                selected_counter.setCountInitVal(Integer.parseInt(mCounterInitValEdit.getText().toString()));
+                selected_counter.setCountComment(mCounterCommentEdit.getText().toString());
+
+                // Check if user changed the current value
+                int old_curr_val = selected_counter.getCountCurrVal();
+                int new_curr_val = Integer.parseInt(mCounterCurrValEdit.getText().toString());
+
+                if (old_curr_val != new_curr_val) {
+                    // Set the current value of the selected counter to new current value
+                    selected_counter.setCountCurrVal(new_curr_val);
+                }
 
                 // The old array list of counters in the main screen
                 ArrayList<Counter> temp_counters = MainActivity.getCounterList();
 
                 // set the counter object at the position of the selected counter object to the new one
-                temp_counters.set(counter_position, changed_counter);
+                temp_counters.set(counter_position, selected_counter);
 
                 // update the counter list in the mainactivity
                 MainActivity.setCounterList(temp_counters);

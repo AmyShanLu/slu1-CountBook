@@ -48,10 +48,8 @@ public class Counter  implements Parcelable {
 
         // Set the counter's current value equal to its initial value when the new counter is created.
         // User can change this counter's current value directly in the Current Value's field.
-        this.curr_val = this.init_val;
-
         //Set the counter's date to the date it's created
-        setDate();
+        setCountCurrVal(this.init_val);
 
         // Set the comment to empty string
         setCountComment("");
