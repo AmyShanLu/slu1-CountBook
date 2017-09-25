@@ -253,29 +253,35 @@ public class CounterDetailActivity extends AppCompatActivity {
                 selected_counter.setCountInitVal(Integer.parseInt(mCounterInitValEdit.getText().toString()));
                 selected_counter.setCountComment(mCounterCommentEdit.getText().toString());
 
-                // Check if user changed the current value
-                int old_curr_val = selected_counter.getCountCurrVal();
-                int new_curr_val = Integer.parseInt(mCounterCurrValEdit.getText().toString());
+                // Check if the Current Value Edit box is empty
+                if (mCounterCurrValEdit.getText().toString().trim().equals("")) {
+                    // Set current value error
+                    mCounterCurrValEdit.setError("Current value cannot be empty");
+                } else {
+                    // Check if user changed the current value
+                    int old_curr_val = selected_counter.getCountCurrVal();
+                    int new_curr_val = Integer.parseInt(mCounterCurrValEdit.getText().toString());
 
-                if (old_curr_val != new_curr_val) {
-                    // Set the current value of the selected counter to new current value
-                    selected_counter.setCountCurrVal(new_curr_val);
+                    if (old_curr_val != new_curr_val) {
+                        // Set the current value of the selected counter to new current value
+                        selected_counter.setCountCurrVal(new_curr_val);
+                    }
+
+                    // The old array list of counters in the main screen
+                    ArrayList<Counter> temp_counters = MainActivity.getCounterList();
+
+                    // set the counter object at the position of the selected counter object to the new one
+                    temp_counters.set(counter_position, selected_counter);
+
+                    // update the counter list in the mainactivity
+                    MainActivity.setCounterList(temp_counters);
+
+                    // Update the screen and data in the file
+                    MainActivity.updateData();
+
+                    // close detail screen
+                    finish();
                 }
-
-                // The old array list of counters in the main screen
-                ArrayList<Counter> temp_counters = MainActivity.getCounterList();
-
-                // set the counter object at the position of the selected counter object to the new one
-                temp_counters.set(counter_position, selected_counter);
-
-                // update the counter list in the mainactivity
-                MainActivity.setCounterList(temp_counters);
-
-                // Update the screen and data in the file
-                MainActivity.updateData();
-
-                // close detail screen
-                finish();
             }
         } else {
             // Toast an error message
