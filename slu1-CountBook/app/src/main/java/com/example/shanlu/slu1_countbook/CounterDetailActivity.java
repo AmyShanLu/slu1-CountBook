@@ -16,6 +16,16 @@ import java.util.ArrayList;
 
 import static com.example.shanlu.slu1_countbook.R.string.val_edit_hint;
 
+/**
+ * The CounterDetailActivity shows the details of a selected counter object or a empty detail page
+ * allowing the user create a new counter. Through this UI, the user can directly edit the name, current
+ * value, initial value and comment of a counter object. Save and Cancel buttons allow the user to save
+ * or cancel the changes he/she made. The increment and decrement buttons allow the user increment or
+ * decrement the current value by 1. The reset button allows the user to reset the current value to the
+ * initial value. The EditTexts add input constraints on the fields, to create a new counter or save changes
+ * to the selected counter, the user must have no error in the EditTexts.
+ */
+
 public class CounterDetailActivity extends AppCompatActivity {
 
     // Boolean var indicates if the new counter needs to be added

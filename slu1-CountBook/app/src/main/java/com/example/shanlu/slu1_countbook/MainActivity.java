@@ -19,7 +19,11 @@ import com.example.shanlu.slu1_countbook.Data.Counter;
 
 import java.util.ArrayList;
 
-import static com.example.shanlu.slu1_countbook.R.id.total_number_textView;
+/**
+ * The MainActivity shows a list of Counter objects on the screen, it contains an add button to allow
+ * the user add new counter object to the list, and it has a view to show the total number of counter
+ * objects in the list.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         counterFileStorage = new CounterFileStorage(this);
 
-        mTotalNumTextView = (TextView) findViewById(total_number_textView);
+        mTotalNumTextView = (TextView) findViewById(R.id.total_number_textView);
 
         mAddButton = (Button) findViewById(R.id.add_button);
 

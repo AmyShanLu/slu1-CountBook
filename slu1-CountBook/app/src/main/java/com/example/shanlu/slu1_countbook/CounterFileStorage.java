@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 
 /**
- * Save counter records in the counter list to file
- * Read counter records from the file
+ * The CounterFileStorage contains two methods to save counter records in the counter list to file
+ * and read counter records from the file.
  */
 public class CounterFileStorage {
 
