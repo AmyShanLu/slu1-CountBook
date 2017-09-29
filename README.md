@@ -16,7 +16,7 @@
 * targetSdkVersion 25
 
 # Video Link
-https://www.youtube.com/watch?v=2TedwPLmpCE&t=10s
+https://www.youtube.com/watch?v=2TedwPLmpCE
 
 # Reference
 * [Android Developer](https://developer.android.com/index.html)
