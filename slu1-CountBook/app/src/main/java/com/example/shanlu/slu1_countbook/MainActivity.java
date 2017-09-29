@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 mTotalNumTextView.setText(Integer.toString(counters.size()));
             }
 
+            // Reference: https://stackoverflow.com/questions/30820806/adding-a-colored-background-with-text-icon-under-swiped-row-when-using-androids
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                         float dX, float dY, int actionState, boolean isCurrentlyActive) {
